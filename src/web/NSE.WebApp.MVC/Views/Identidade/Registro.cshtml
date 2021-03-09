@@ -1,0 +1,39 @@
+﻿@model NSE.WebApp.MVC.Models.UsuarioRegistro
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <section>
+            <h1>Registre-se e comece a comprar hoje mesmo</h1>
+            <hr />
+
+            <vc:Summary></vc:Summary>
+
+            <form method="post">
+                <div class="form-group">
+                    <label asp-for="Email">Email</label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Senha">Senha</label>
+                    <input type="password" asp-for="Senha" class="form-control" />
+                    <span asp-validation-for="Senha" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SenhaConfirmacao">Senha</label>
+                    <input type="password" asp-for="SenhaConfirmacao" class="form-control" />
+                    <span asp-validation-for="SenhaConfirmacao" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>

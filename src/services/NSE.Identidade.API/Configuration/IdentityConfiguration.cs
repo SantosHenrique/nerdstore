@@ -54,10 +54,12 @@ namespace NSE.Identidade.API.Configuration
             return services;
         }
 
-        public static void UseIdentityConfiguration(this IApplicationBuilder app)
+        public static IApplicationBuilder UseIdentityConfiguration(this IApplicationBuilder app)
         {
             app.UseAuthorization();
             app.UseAuthentication();
+
+            return app;
         }
     }
 }

@@ -14,7 +14,7 @@ namespace NSE.Identidade.API.Configuration
             return services;
         }
 
-        public static void UseApiConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)
+        public static IApplicationBuilder UseApiConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -31,6 +31,8 @@ namespace NSE.Identidade.API.Configuration
             {
                 endpoints.MapControllers();
             });
+
+            return app;
         }
     }
 }
