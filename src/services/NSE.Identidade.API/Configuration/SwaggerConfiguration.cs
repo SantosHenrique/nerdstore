@@ -18,13 +18,15 @@ namespace NSE.Identidade.API.Configuration
             return services;
         }
 
-        public static void UseSwaggerConfiguration(this IApplicationBuilder app)
+        public static IApplicationBuilder UseSwaggerConfiguration(this IApplicationBuilder app)
         {
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
             });
+
+            return app;
         }
     }
 }
