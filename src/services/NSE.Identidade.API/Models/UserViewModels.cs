@@ -18,6 +18,12 @@ namespace NSE.Identidade.API.Models
 
         [Compare("Senha", ErrorMessage = "As senhas não conferem")]
         public string SenhaConfirmacao { get; set; }
+
+        [Required(ErrorMessage = "O campo {0} é de preenchimento obrigatório")]
+        public string Nome { get; set; }
+
+        [Required(ErrorMessage = "O campo {0} é de preenchimento obrigatório")]
+        public string Cpf { get; set; }
     }
 
     public class UsuarioLogin

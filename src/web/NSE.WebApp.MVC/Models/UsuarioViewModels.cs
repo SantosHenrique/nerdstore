@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using NSE.WebApp.MVC.Extensions;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace NSE.WebApp.MVC.Models
@@ -15,6 +17,15 @@ namespace NSE.WebApp.MVC.Models
 
         [Compare("Senha", ErrorMessage = "As senhas não conferem")]
         public string SenhaConfirmacao { get; set; }
+
+        [DisplayName("Nome completo")]
+        [Required(ErrorMessage = "O campo {0} é de preenchimento obrigatório")]
+        public string Nome { get; set; }
+
+        [DisplayName("CPF")]
+        [Required(ErrorMessage = "O campo {0} é de preenchimento obrigatório")]
+        [Cpf]
+        public string Cpf { get; set; }
     }
 
     public class UsuarioLogin
