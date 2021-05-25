@@ -10,7 +10,7 @@ namespace NSE.Core.DomainObjects
 
         private List<Event> _notificacoes;
 
-        public IReadOnlyCollection<Event> Notificacoes => _notificacoes.AsReadOnly();
+        public IReadOnlyCollection<Event> Notificacoes => _notificacoes?.AsReadOnly();
 
         public void AdicionarEvento(Event evento)
         {

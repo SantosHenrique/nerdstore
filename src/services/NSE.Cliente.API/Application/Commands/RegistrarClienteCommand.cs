@@ -33,12 +33,6 @@ namespace NSE.Cliente.API.Application.Commands
     {
         public RegistrarClienteValidation()
         {
-            RuleFor(c => c.Id)
-                .NotEmpty()
-                .NotNull()
-                .NotEqual(Guid.Empty)
-                .WithMessage("Identificador do cliente inválido");
-
             RuleFor(c => c.Nome)
                 .NotEmpty()
                 .WithMessage("O nome é de preenchimento obrigatório");
