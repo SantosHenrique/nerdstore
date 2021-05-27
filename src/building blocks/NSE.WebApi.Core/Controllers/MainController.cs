@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NSE.Identidade.API.Controllers
+namespace NSE.WebApi.Core.Controllers
 {
     [ApiController]
     public abstract class MainController : Controller
