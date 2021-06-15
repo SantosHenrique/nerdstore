@@ -26,40 +26,52 @@ namespace NSE.MessageBus
             _bus.PubSub.Publish(message);
         }
 
-        public Task PublishAsync<T>(T message) where T : IntegrationEvent
+        public async Task PublishAsync<T>(T message) where T : IntegrationEvent
         {
-            throw new NotImplementedException();
+            await _bus.PubSub.PublishAsync(message);
         }
 
         public TResponse Request<TRequest, TResponse>(TRequest request)
             where TRequest : IntegrationEvent
             where TResponse : ResponseMessage
         {
-            throw new NotImplementedException();
+            TryConnect();
+            return _bus.Rpc.Request<TRequest, TResponse>(request);
+        }
+
+        public async Task<TResponse> RequestAsync<TRequest, TResponse>(TRequest request)
+            where TRequest : IntegrationEvent
+            where TResponse : ResponseMessage
+        {
+            TryConnect();
+            return await _bus.Rpc.RequestAsync<TRequest, TResponse>(request);
         }
 
         public IDisposable Respond<TRequest, TResponse>(Func<TRequest, TResponse> responder)
             where TRequest : IntegrationEvent
             where TResponse : ResponseMessage
         {
-            throw new NotImplementedException();
+            TryConnect();
+            return _bus.Rpc.Respond(responder);
         }
 
-        public IDisposable RespondAsync<TRequest, TResponse>(Func<TRequest, Task<TResponse>> responder)
+        public Task<IDisposable> RespondAsync<TRequest, TResponse>(Func<TRequest, Task<TResponse>> responder)
             where TRequest : IntegrationEvent
             where TResponse : ResponseMessage
         {
-            throw new NotImplementedException();
+            TryConnect();
+            return _bus.Rpc.RespondAsync(responder);
         }
 
         public void Subscribe<T>(string subscriptionId, Action<T> onMessage) where T : class
         {
-            throw new NotImplementedException();
+            TryConnect();
+            _bus.PubSub.Subscribe(subscriptionId, onMessage);
         }
 
-        public void SubscriveAsync<T>(string subscriptionId, Func<T, Task> onMessage) where T : class
+        public async Task SubscriveAsync<T>(string subscriptionId, Func<T, Task> onMessage) where T : class
         {
-            throw new NotImplementedException();
+            await _bus.PubSub.SubscribeAsync(subscriptionId, onMessage);
         }
 
         private void TryConnect()
@@ -72,9 +84,10 @@ namespace NSE.MessageBus
 
             policy.Execute(() => { _bus = RabbitHutch.CreateBus(_connectionString); });
         }
+
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _bus.Dispose();
         }
     }
 
@@ -86,9 +99,13 @@ namespace NSE.MessageBus
 
         void Subscribe<T>(string subscriptionId, Action<T> onMessage) where T : class;
 
-        void SubscriveAsync<T>(string subscriptionId, Func<T, Task> onMessage) where T : class;
+        Task SubscriveAsync<T>(string subscriptionId, Func<T, Task> onMessage) where T : class;
 
         TResponse Request<TRequest, TResponse>(TRequest request)
+            where TRequest : IntegrationEvent
+            where TResponse : ResponseMessage;
+
+        Task<TResponse> RequestAsync<TRequest, TResponse>(TRequest request)
             where TRequest : IntegrationEvent
             where TResponse : ResponseMessage;
 
@@ -96,7 +113,7 @@ namespace NSE.MessageBus
             where TRequest : IntegrationEvent
             where TResponse : ResponseMessage;
 
-        IDisposable RespondAsync<TRequest, TResponse>(Func<TRequest, Task<TResponse>> responder)
+        Task<IDisposable> RespondAsync<TRequest, TResponse>(Func<TRequest, Task<TResponse>> responder)
             where TRequest : IntegrationEvent
             where TResponse : ResponseMessage;
 
