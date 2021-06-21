@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 
-namespace NSE.WebApp.MVC.Extensions
+namespace NSE.WebApi.Core.Usuario
 {
-    public class AspNetUser : IUser
+    public class AspNetUser : IAspNetUser
     {
         private readonly IHttpContextAccessor _acessor;
         public AspNetUser(IHttpContextAccessor acessor)
@@ -16,7 +16,7 @@ namespace NSE.WebApp.MVC.Extensions
 
         public Guid ObterUserId => EstaAutenticado() ? Guid.Parse(_acessor.HttpContext.User.GetUserClaimValue("sub")) : Guid.Empty;
 
-        public string ObterUserEmail => EstaAutenticado() ?_acessor.HttpContext.User.GetUserClaimValue("email") : string.Empty;
+        public string ObterUserEmail => EstaAutenticado() ? _acessor.HttpContext.User.GetUserClaimValue("email") : string.Empty;
 
         public string ObterUserToken => EstaAutenticado() ? _acessor.HttpContext.User.FindFirstValue("JWT") : string.Empty;
 
@@ -30,16 +30,11 @@ namespace NSE.WebApp.MVC.Extensions
 
         public bool PossuiRole(string role)
         => _acessor.HttpContext.User.IsInRole(role);
-    }
 
-    public static class ClaimsTypeExtensions
-    {
-        public static string GetUserClaimValue(this ClaimsPrincipal principal, string claimType)
+        IEnumerable<Claim> IAspNetUser.ObterClaims()
         {
-            if (principal == null)
-                throw new ArgumentException(nameof(principal));
-
-            return principal.FindFirstValue(claimType);
+            throw new NotImplementedException();
         }
     }
 }
+
