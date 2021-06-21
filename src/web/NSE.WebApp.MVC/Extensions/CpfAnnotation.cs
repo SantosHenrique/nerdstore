@@ -4,6 +4,7 @@ using Microsoft.Extensions.Localization;
 using NSE.Core.DomainObjects;
 using System;
 using System.ComponentModel.DataAnnotations;
+
 namespace NSE.WebApp.MVC.Extensions
 {
     public class CpfAttribute : ValidationAttribute
